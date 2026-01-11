@@ -1,0 +1,27 @@
+/ignore/
+# Ignore all .pyc files
+*.pyc
+# Ignore __pycache__ directories
+__pycache__/
+# Ignore virtual environment directories
+venv/
+.env/
+env/
+# Ignore IDE specific files
+.vscode/
+.idea/
+# Ignore system files
+.DS_Store
+Thumbs.db
+# Ignore log files
+*.log
+# Ignore HTML files
+*.html
+# Ignore data files
+data/
+# Ignore temporary files
+*.tmp
+temp/
+*.bak
+
+settings.py
