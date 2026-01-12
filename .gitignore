@@ -25,3 +25,4 @@ temp/
 *.bak
 
 settings.py
+notification_history.json

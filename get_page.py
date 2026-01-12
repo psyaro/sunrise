@@ -5,6 +5,7 @@ import requests
 import pandas as pd
 import parse_html
 import settings
+import google_home_notify
 
 # 駅名と列車種別の定義
 STATIONS = {
@@ -76,14 +77,15 @@ def search_main(direction, date, hour, minute, train, url_print=False):
                 f" {info['train']} {info['seat']}: {info['status']}\n{url}"
             }
             requests.post(hook, data=data)
-    time.sleep(2)  # サーバーへの負荷を避けるために少し待機
+
+            # GoogleHomeで音声通知（重複チェック付き）
+            message = f"空席が見つかりました"
+            google_home_notify.notify_with_duplicate_check(message)
+    time.sleep(5)  # サーバーへの負荷を避けるために少し待機
 
 def main():
-    # for day in range(1, 12):
-    #     search_main(1, datetime(2026, 2, day).strftime("%Y%m%d"), 21, 00, 1, url_print=True)
-    #     search_main(1, datetime(2026, 2, day).strftime("%Y%m%d"), 21, 00, 2, url_print=True)
-    #     search_main(2, datetime(2026, 2, day).strftime("%Y%m%d"), 21, 00, 1, url_print=True)
-    #     search_main(2, datetime(2026, 2, day).strftime("%Y%m%d"), 21, 00, 2, url_print=True)
+    search_main(1, datetime(2026, 2, 12).strftime("%Y%m%d"), 21, 00, 1)
+    search_main(1, datetime(2026, 2, 12).strftime("%Y%m%d"), 21, 00, 2)
     search_main(1, datetime(2026, 2, 4).strftime("%Y%m%d"), 21, 00, 1)
     search_main(1, datetime(2026, 2, 4).strftime("%Y%m%d"), 21, 00, 2)
     search_main(1, datetime(2026, 2, 5).strftime("%Y%m%d"), 21, 00, 1)
