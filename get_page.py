@@ -53,7 +53,7 @@ def search_main(direction, date, hour, minute, train, url_print=False):
     if train == 1:
         train_name = r"%BB%B2%BD%D3%BB000"
     elif train == 2:
-        train_name = r"%BB%BE%C4%20%20000"
+        train_name = r"%BB%BE%C4%BB%20000"
     elif train == 3:
         train_name = r"%BB%BE%C4%20%20000"
     elif train == 4:
