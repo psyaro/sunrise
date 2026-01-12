@@ -1,4 +1,5 @@
 from datetime import datetime
+import random
 import time
 import webbrowser
 import requests
@@ -76,16 +77,21 @@ def search_main(direction, date, hour, minute, train, url_print=False):
                 "content": f"【空席あり】 {info['date']} {info['time']} {info['route']}"
                 f" {info['train']} {info['seat']}: {info['status']}\n{url}"
             }
-            requests.post(hook, data=data)
-
-            # GoogleHomeで音声通知（重複チェック付き）
-            message = f"空席が見つかりました"
-            google_home_notify.notify_with_duplicate_check(message)
-    time.sleep(5)  # サーバーへの負荷を避けるために少し待機
+            try:
+                requests.post(hook, data=data)
+            except Exception as e:
+                print(f"Discord通知エラー: {e}")
+            try:
+                google_home_notify.notify_with_duplicate_check("空席があります。 確認してください。")
+            except Exception as e:
+                print(f"Google Home通知エラー: {e}")
+    time.sleep(random.randint(5, 20))  # サーバーへの負荷を避けるために少し待機
 
 def main():
-    search_main(1, datetime(2026, 2, 12).strftime("%Y%m%d"), 21, 00, 1)
-    search_main(1, datetime(2026, 2, 12).strftime("%Y%m%d"), 21, 00, 2)
+    search_main(1, datetime(2026, 1, 24).strftime("%Y%m%d"), 21, 00, 1)
+    search_main(1, datetime(2026, 1, 24).strftime("%Y%m%d"), 21, 00, 2)
+    search_main(2, datetime(2026, 1, 27).strftime("%Y%m%d"), 21, 00, 1)
+    search_main(2, datetime(2026, 1, 27).strftime("%Y%m%d"), 21, 00, 2)
     search_main(1, datetime(2026, 2, 4).strftime("%Y%m%d"), 21, 00, 1)
     search_main(1, datetime(2026, 2, 4).strftime("%Y%m%d"), 21, 00, 2)
     search_main(1, datetime(2026, 2, 5).strftime("%Y%m%d"), 21, 00, 1)
@@ -94,10 +100,10 @@ def main():
     search_main(2, datetime(2026, 2, 6).strftime("%Y%m%d"), 21, 00, 2)
     search_main(2, datetime(2026, 2, 7).strftime("%Y%m%d"), 21, 00, 1)
     search_main(2, datetime(2026, 2, 7).strftime("%Y%m%d"), 21, 00, 2)
-    search_main(1, datetime(2026, 1, 24).strftime("%Y%m%d"), 21, 00, 1)
-    search_main(1, datetime(2026, 1, 24).strftime("%Y%m%d"), 21, 00, 2)
-    search_main(2, datetime(2026, 1, 27).strftime("%Y%m%d"), 21, 00, 1)
-    search_main(2, datetime(2026, 1, 27).strftime("%Y%m%d"), 21, 00, 2)
+    search_main(1, datetime(2026, 2, 12).strftime("%Y%m%d"), 21, 00, 1)
+    search_main(1, datetime(2026, 2, 12).strftime("%Y%m%d"), 21, 00, 2)
+    search_main(1, datetime(2026, 2, 13).strftime("%Y%m%d"), 21, 00, 1)
+    search_main(1, datetime(2026, 2, 13).strftime("%Y%m%d"), 21, 00, 2)
 
 
 if __name__ == "__main__":
