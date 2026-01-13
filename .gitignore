@@ -26,3 +26,4 @@ temp/
 
 settings.py
 notification_history.json
+discord_notification_history.json
